@@ -4,8 +4,24 @@ import { currentUser, clerkClient } from "@clerk/nextjs/server";
 import { profileSchema } from "./schemas";
 import db from "@/utils/db";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
+//authenticate User
+export async function getAuthUser() {
+  const user = await currentUser();
+  if (!user) {
+    throw new Error("You must be logged in to access this route");
+  }
+  if (!user.privateMetadata.hasProfile) redirect("/profile/create");
+  return user;
+}
 
+//error Handling
+const renderError = (error: unknown): { message: string } => {
+  return {
+    message: error instanceof Error ? error.message : "An error occurred",
+  };
+};
 //create Profile in /profile/create page
 export const createProfileAction = async (
   prevState: unknown,
@@ -26,7 +42,7 @@ export const createProfileAction = async (
         profileImage: user.imageUrl || "",
         firstName: validateFields.firstName,
         lastName: validateFields.lastName,
-        username: validateFields.userName,
+        userName: validateFields.userName,
       },
     });
 
@@ -36,9 +52,7 @@ export const createProfileAction = async (
 
     return { message: "Profile Created" };
   } catch (error) {
-    return {
-      message: error instanceof Error ? error.message : "An error occured",
-    };
+   return renderError(error);
   }
   redirect("/");
 };
@@ -46,16 +60,55 @@ export const createProfileAction = async (
 //if user logged in and exist its Picture ,show that picture
 // NavBar/UserIcon component
 
-export async function fetchProfileImage(){
-  const user=await currentUser()
-  if(!user) return null;
-  const profile=await db.profile.findUnique({
-    where:{
-      clerkId:user.id
+export async function fetchProfileImage() {
+  const user = await currentUser();
+
+  if (!user) return null;
+  const profile = await db.profile.findUnique({
+    where: {
+      clerkId: user.id,
     },
-    select:{
-      profileImage:true
-    }
-  })
-  return profile?.profileImage
+    select: {
+      profileImage: true,
+    },
+  });
+  return profile?.profileImage;
 }
+
+//fetch profile for /profile  page and update after that
+export const fetchProfile = async () => {
+  const user = await getAuthUser();
+  const profile = await db.profile.findUnique({
+    where: {
+      clerkId: user.id,
+    },
+  });
+  if (!profile) return redirect("/profile/create");
+  return profile;
+};
+
+//update /profile/page.tsx
+export const updateProfileAction = async (
+  prevState: unknown,
+  formData: FormData
+): Promise<{ message: string }> => {
+  const user = await getAuthUser();
+  try {
+    const rawData = Object.fromEntries(formData);
+    console.log(rawData)
+    const validateFields = profileSchema.parse(rawData);
+    console.log(validateFields)
+    await db.profile.update({
+      where: {
+        clerkId: user.id,
+      },
+      data:{
+        ...validateFields
+      }
+    });
+    revalidatePath("/profile");
+    return { message: "Profile updated successfully" };
+  } catch (error) {
+    return renderError(error);
+  }
+};

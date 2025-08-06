@@ -57,7 +57,7 @@ function LinksDropdown() {
       <DropdownMenuItem>
         <SignOutLink />
       </DropdownMenuItem>
-    </SignedIn>
+         </SignedIn>
       </DropdownMenuContent>
     </DropdownMenu>
   );
