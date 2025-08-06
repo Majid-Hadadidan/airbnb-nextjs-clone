@@ -1012,7 +1012,7 @@ export const createProfileAction = async (
   formData: FormData
 ) => {
   try {
-    const user = await currentUser();
+    const user =await currentUser();
     if (!user) throw new Error('Please login to create a profile');
 
     const rawData = Object.fromEntries(formData);
@@ -1045,21 +1045,21 @@ export const createProfileAction = async (
 actions.ts
 
 ```ts
-export const fetchProfileImage = async () => {
-  const user = await currentUser();
-  if (!user) return null;
+  export const fetchProfileImage = async () => {
+    const user = await currentUser();
+    if (!user) return null;
 
-  const profile = await db.profile.findUnique({
-    where: {
-      clerkId: user.id,
-    },
-    select: {
-      profileImage: true,
-    },
-  });
-  return profile?.profileImage;
-};
-```
+    const profile = await db.profile.findUnique({
+      where: {
+        clerkId: user.id,
+      },
+      select: {
+        profileImage: true,
+      },
+    });
+    return profile?.profileImage;
+  };
+  ```
 
 - components/navbar/UserIcon.tsx
 
