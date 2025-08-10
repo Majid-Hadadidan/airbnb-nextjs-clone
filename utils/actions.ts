@@ -1,7 +1,7 @@
 "use server";
 
 import { currentUser, clerkClient } from "@clerk/nextjs/server";
-import { profileSchema } from "./schemas";
+import { profileSchema, validateWidthZodSchema } from "./schemas";
 import db from "@/utils/db";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -33,16 +33,14 @@ export const createProfileAction = async (
     if (!user) throw new Error("Please login to create a profile");
 
     const rawData = Object.fromEntries(formData);
-    const validateFields = profileSchema.parse(rawData);
+    const validateFields = validateWidthZodSchema(profileSchema, rawData);
 
     await db.profile.create({
       data: {
         clerkId: user.id,
         email: user.emailAddresses[0].emailAddress,
         profileImage: user.imageUrl || "",
-        firstName: validateFields.firstName,
-        lastName: validateFields.lastName,
-        userName: validateFields.userName,
+        ...validateFields,
       },
     });
 
@@ -52,7 +50,7 @@ export const createProfileAction = async (
 
     return { message: "Profile Created" };
   } catch (error) {
-   return renderError(error);
+    return renderError(error);
   }
   redirect("/");
 };
@@ -95,16 +93,13 @@ export const updateProfileAction = async (
   const user = await getAuthUser();
   try {
     const rawData = Object.fromEntries(formData);
-    console.log(rawData)
-    const validateFields = profileSchema.parse(rawData);
-    console.log(validateFields)
+    const validateFields = validateWidthZodSchema(profileSchema, rawData);
+
     await db.profile.update({
       where: {
         clerkId: user.id,
       },
-      data:{
-        ...validateFields
-      }
+      data: validateFields,
     });
     revalidatePath("/profile");
     return { message: "Profile updated successfully" };
