@@ -1,10 +1,11 @@
 "use server";
 
 import { currentUser, clerkClient } from "@clerk/nextjs/server";
-import { profileSchema, validateWidthZodSchema } from "./schemas";
+import { imageSchema, profileSchema, validateWidthZodSchema } from "./schemas";
 import db from "@/utils/db";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { uploadImage } from "./supabase";
 
 //authenticate User
 export async function getAuthUser() {
@@ -105,5 +106,31 @@ export const updateProfileAction = async (
     return { message: "Profile updated successfully" };
   } catch (error) {
     return renderError(error);
+  }
+};
+
+//update Image in profile page and save that in supabase bucket
+export const updateProfileImageAction = async (
+  prevState: unknown,
+  formData: FormData
+): Promise<{ message: string }> => {
+  const user = await getAuthUser();
+  try {
+    const image = formData.get("image") as File;
+    const validateFields = validateWidthZodSchema(imageSchema, { image });
+    console.log(validateFields);
+    const fullPath = await uploadImage(validateFields.image);
+    await db.profile.update({
+      where: {
+        clerkId: user.id,
+      },
+      data: {
+        profileImage: fullPath,
+      },
+    });
+    revalidatePath("/profile");
+    return { message: "Profile image updated successfully" };
+  } catch (error) {
+   return  renderError(error);
   }
 };
