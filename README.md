@@ -1602,7 +1602,7 @@ const nextConfig = {
         hostname: "jxdujzgweuaphpgoowhu.supabase.co",
       },
     ],
-  },
+  },  
 };
 
 export default nextConfig;
