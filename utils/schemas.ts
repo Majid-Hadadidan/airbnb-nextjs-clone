@@ -46,3 +46,50 @@ function validateFile() {
       );
     }, "File must be an image");
 }
+
+//*************Schema for Property Model****************
+export const propertySchema = z.object({
+  name: z
+    .string()
+    .min(2, {
+      error: "name must be at least 2 characters.",
+    })
+    .max(100, {
+      error: "name must be less than 100 characters.",
+    }),
+  tagline: z
+    .string()
+    .min(2, {
+      error: "tagline must be at least 2 characters.",
+    })
+    .max(100, {
+      error: "tagline must be less than 100 characters.",
+    }),
+  price: z.coerce.number().int().min(0, {
+    error: "price must be a positive number.",
+  }),
+  category: z.string(),
+  description: z.string().refine(
+    (description) => {
+      const wordCount = description.split(" ").length;
+      return wordCount >= 10 && wordCount <= 1000;
+    },
+    {
+      error: "description must be between 10 and 1000 words.",
+    }
+  ),
+  country: z.string(),
+  guests: z.coerce.number().int().min(0, {
+    error: "guest amount must be a positive number.",
+  }),
+  bedrooms: z.coerce.number().int().min(0, {
+    error: "bedrooms amount must be a positive number.",
+  }),
+  beds: z.coerce.number().int().min(0, {
+    error: "beds amount must be a positive number.",
+  }),
+  baths: z.coerce.number().int().min(0, {
+    error: "bahts amount must be a positive number.",
+  }),
+  amenities: z.string(),
+});

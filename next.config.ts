@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       "img.clerk.com",
       "images.clerk.dev",
       "gvezskrfxkmxxisxeewu.supabase.co",
+      'flagcdn.com'
     ],
   },
   experimental: {

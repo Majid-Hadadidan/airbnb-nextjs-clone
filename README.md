@@ -2013,7 +2013,7 @@ function CountriesInput({ defaultValue }: { defaultValue?: string }) {
         required
       >
         <SelectTrigger id={name}>
-          <SelectValue />
+         <SelectValue />
         </SelectTrigger>
         <SelectContent>
           {formattedCountries.map((item) => {

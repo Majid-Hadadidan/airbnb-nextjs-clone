@@ -1,7 +1,12 @@
 "use server";
 
 import { currentUser, clerkClient } from "@clerk/nextjs/server";
-import { imageSchema, profileSchema, validateWidthZodSchema } from "./schemas";
+import {
+  imageSchema,
+  profileSchema,
+  propertySchema,
+  validateWidthZodSchema,
+} from "./schemas";
 import db from "@/utils/db";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -118,7 +123,7 @@ export const updateProfileImageAction = async (
   try {
     const image = formData.get("image") as File;
     const validateFields = validateWidthZodSchema(imageSchema, { image });
-    console.log(validateFields);
+
     const fullPath = await uploadImage(validateFields.image);
     await db.profile.update({
       where: {
@@ -131,6 +136,20 @@ export const updateProfileImageAction = async (
     revalidatePath("/profile");
     return { message: "Profile image updated successfully" };
   } catch (error) {
-   return  renderError(error);
+    return renderError(error);
   }
 };
+
+export async function createPropertyAction(
+  prevState: unknown,
+  formData: FormData
+): Promise<{ message: string }> {
+  try {
+    const rawData = Object.fromEntries(formData);
+    const validateFields = validateWidthZodSchema(propertySchema, rawData);
+    console.log(validateFields);
+    return { message: "successfully " };
+  } catch (error) {
+    return renderError(error);
+  }
+}

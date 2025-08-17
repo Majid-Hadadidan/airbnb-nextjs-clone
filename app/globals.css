@@ -1,6 +1,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
+/* Add to your global CSS */
+/* Ensure proper emoji rendering */
+.flag-emoji {
+  font-family: 
+    "Apple Color Emoji", 
+    "Segoe UI Emoji", 
+    "Noto Color Emoji", 
+    "EmojiSymbols", 
+    "Symbola", 
+    sans-serif;
+  font-size: 1.2rem;
+  line-height: 1;
+}
 @custom-variant dark (&:is(.dark *));
 
 @layer components {
