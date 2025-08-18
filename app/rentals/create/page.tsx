@@ -1,5 +1,6 @@
 import { SubmitButton } from "@/components/form/Buttons";
 import CategoriesInput from "@/components/form/CategoriesInput";
+import CounterInput from "@/components/form/CounterInput";
 import CountriesInput from "@/components/form/CountriesInput";
 import FormContainer from "@/components/form/FormContainer";
 import FormInput from "@/components/form/FormInput";
@@ -44,6 +45,15 @@ function CreatePropertyPage() {
           <div className="grid sm:grid-cols-2 gap-8 mt-4">
             <CountriesInput />
             <ImageInput />
+          </div>
+          <div>
+            <h3 className="text-lg mt-8 mb-4 font-medium">
+              Accommodation Details
+            </h3>
+            <CounterInput detail="guests" />
+            <CounterInput detail="bedrooms" />
+            <CounterInput detail="beds" />
+            <CounterInput detail="baths" />
           </div>
           <SubmitButton text="create rental" className="mt-12" />
         </FormContainer>
