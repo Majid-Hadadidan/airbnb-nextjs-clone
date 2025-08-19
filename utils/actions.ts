@@ -140,17 +140,28 @@ export const updateProfileImageAction = async (
   }
 };
 
-export async function createPropertyAction(
+export const createPropertyAction = async (
   prevState: unknown,
   formData: FormData
-): Promise<{ message: string }> {
+): Promise<{ message: string }> => {
   const user = await getAuthUser();
   try {
     const rawData = Object.fromEntries(formData);
-    const validateFields = validateWidthZodSchema(propertySchema, rawData);
-    console.log(validateFields);
-    return { message: "successfully " };
+    const file = formData.get("image") as File;
+
+    const validatedFields = validateWidthZodSchema(propertySchema, rawData);
+    const validatedFile = validateWidthZodSchema(imageSchema, { image: file });
+    const fullPath = await uploadImage(validatedFile.image);
+
+    await db.property.create({
+      data: {
+        ...validatedFields,
+        image: fullPath,
+        profileId: user.id,
+      },
+    });
   } catch (error) {
     return renderError(error);
   }
-}
+  redirect("/");
+};

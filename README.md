@@ -2222,10 +2222,10 @@ export const conservativeAmenities: Amenity[] = [
 - components/form/AmenitiesInput.tsx
 
 ```tsx
-"use client";
-import { useState } from "react";
-import { amenities, Amenity } from "@/utils/amenities";
-import { Checkbox } from "@/components/ui/checkbox";
+  "use client";
+  import { useState } from "react";
+  import { amenities, Amenity } from "@/utils/amenities";
+  import { Checkbox } from "@/components/ui/checkbox";
 
 function AmenitiesInput({ defaultValue }: { defaultValue?: Amenity[] }) {
   const [selectedAmenities, setSelectedAmenities] = useState<Amenity[]>(
