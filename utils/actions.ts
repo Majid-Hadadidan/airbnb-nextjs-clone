@@ -140,6 +140,7 @@ export const updateProfileImageAction = async (
   }
 };
 
+//rental/create page  create new create property
 export const createPropertyAction = async (
   prevState: unknown,
   formData: FormData
@@ -164,4 +165,32 @@ export const createPropertyAction = async (
     return renderError(error);
   }
   redirect("/");
+};
+
+//fetch property based on category and searchParam in /home page
+export const fetchProperties = async ({
+  search = "",
+  category,
+}: {
+  search?: string;
+  category?: string;
+}) => {
+  const properties = await db.property.findMany({
+    where: {
+      category,
+      OR: [
+        { name: { contains: search, mode: "insensitive" } },
+        { tagline: { contains: search, mode: "insensitive" } },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      tagline: true,
+      country: true,
+      image: true,
+      price: true,
+    },
+  });
+  return properties;
 };

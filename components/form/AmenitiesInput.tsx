@@ -34,13 +34,13 @@ function AmenitiesInput({ defaultValue }: { defaultValue?: Amenity[] }) {
               checked={amenity.selected}
               onCheckedChange={() => handleChange(amenity)}
             />
-            <label
+            <Label
               htmlFor={amenity.name}
               className="text-sm font-medium leading-none capitalize flex gap-x-2 items-center"
             >
               {amenity.name}
               <amenity.icon className="w-4 h-4" />
-            </label>
+            </Label>
           </div>
         ))}
       </div>

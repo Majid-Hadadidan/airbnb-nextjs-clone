@@ -1,13 +1,17 @@
-import { Button } from "@/components/ui/button";
+import CategoriesList from "@/components/home/CategoriesList";
+import PropertiesContainer from "@/components/home/PropertiesContainer";
 
-function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string; search?: string }>;
+}) {
+  const { category, search } = await searchParams;
+
   return (
-    <>
-      <h1 className="text-3xl container">HomePage</h1>
-      <Button size="lg" variant="outline" className="capitalize m-8">
-        Click me
-      </Button>
-    </>
+    <section>
+      <CategoriesList category={category} search={search} />
+      <PropertiesContainer category={category} search={search} />
+    </section>
   );
 }
-export default HomePage;
