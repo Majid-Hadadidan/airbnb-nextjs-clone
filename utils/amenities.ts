@@ -27,7 +27,6 @@ export type Amenity = {
   selected: boolean;
 };
 
-
 export const amenities: Amenity[] = [
   { name: "unlimited cloud storage", icon: FiCloud, selected: false },
   { name: "VIP parking for squirrels", icon: FiTruck, selected: false },
@@ -66,4 +65,3 @@ export const amenities: Amenity[] = [
   { name: "lanterns (fireflies)", icon: FiFilm, selected: false },
   { name: "first aid kit (hope and prayers)", icon: FiTv, selected: false },
 ];
-

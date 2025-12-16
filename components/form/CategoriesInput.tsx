@@ -17,18 +17,17 @@ function CategoriesInput({ defaultValue }: { defaultValue?: string }) {
       </Label>
       <Select
         defaultValue={defaultValue || categories[0].label}
-        
         name={name}
         required
       >
         <SelectTrigger id={name} className="w-full">
-          <SelectValue/>
+          <SelectValue />
         </SelectTrigger>
-        <SelectContent >
+        <SelectContent>
           {categories.map((item) => {
             return (
-              <SelectItem key={item.label} value={item.label} >
-                <span className="flex items-center gap-2 " >
+              <SelectItem key={item.label} value={item.label}>
+                <span className="flex items-center gap-2 ">
                   <item.icon /> {item.label}
                 </span>
               </SelectItem>

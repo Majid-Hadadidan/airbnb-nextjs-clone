@@ -102,7 +102,7 @@ export const updateProfileAction = async (
     const validateFields = validateWidthZodSchema(profileSchema, rawData);
 
     await db.profile.update({
-      where: {
+      where: {  
         clerkId: user.id,
       },
       data: validateFields,
