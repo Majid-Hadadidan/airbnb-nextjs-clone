@@ -7,11 +7,10 @@ export default async function HomePage({
   searchParams: Promise<{ category?: string; search?: string }>;
 }) {
   const { category, search } = await searchParams;
-
   return (
     <section>
-      <CategoriesList category={category} search={search} />
-      <PropertiesContainer category={category} search={search} />
+      <CategoriesList search={search} category={category} />
+      <PropertiesContainer search={search} category={category} />
     </section>
   );
 }

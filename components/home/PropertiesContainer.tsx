@@ -1,6 +1,10 @@
-function PropertiesContainer() {
-  return (
-    <div>PropertiesContainer</div>
-  )
+function PropertiesContainer({
+  search,
+  category,
+}: {
+  search?: string;
+  category?: string;
+}) {
+  return <div>PropertiesContainer</div>;
 }
-export default PropertiesContainer
+export default PropertiesContainer;
