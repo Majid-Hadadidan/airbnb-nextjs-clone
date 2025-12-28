@@ -1602,7 +1602,7 @@ const nextConfig = {
         hostname: "jxdujzgweuaphpgoowhu.supabase.co",
       },
     ],
-  },  
+  },
 };
 
 export default nextConfig;
@@ -2013,7 +2013,7 @@ function CountriesInput({ defaultValue }: { defaultValue?: string }) {
         required
       >
         <SelectTrigger id={name}>
-         <SelectValue />
+          <SelectValue />
         </SelectTrigger>
         <SelectContent>
           {formattedCountries.map((item) => {
@@ -2222,10 +2222,10 @@ export const conservativeAmenities: Amenity[] = [
 - components/form/AmenitiesInput.tsx
 
 ```tsx
-  "use client";
-  import { useState } from "react";
-  import { amenities, Amenity } from "@/utils/amenities";
-  import { Checkbox } from "@/components/ui/checkbox";
+"use client";
+import { useState } from "react";
+import { amenities, Amenity } from "@/utils/amenities";
+import { Checkbox } from "@/components/ui/checkbox";
 
 function AmenitiesInput({ defaultValue }: { defaultValue?: Amenity[] }) {
   const [selectedAmenities, setSelectedAmenities] = useState<Amenity[]>(
@@ -2582,7 +2582,7 @@ function PropertyCard({ property }: { property: PropertyCardProps }) {
   return (
     <article className="group relative">
       <Link href={`/properties/${propertyId}`}>
-        <div className="relative h-[300px] mb-2 overflow-hidden rounded-md">
+        <div className="relative h-[300px] rounded-md mb-2 overflow-hidden ">
           <Image
             src={image}
             fill
