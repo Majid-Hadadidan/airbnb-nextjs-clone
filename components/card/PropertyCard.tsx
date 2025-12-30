@@ -3,6 +3,8 @@ import { PropertyCardProps } from "@/utils/types";
 import Image from "next/image";
 import Link from "next/link";
 import PropertyRating from "./PropertyRating";
+import FavoriteToggleButton from "./FavoriteToggleButton";
+import CountryFlagAndName from "./CountryFlagAndName";
 
 function PropertyCard({ property }: { property: PropertyCardProps }) {
   const { country, id: propertyId, image, name, price, tagline } = property;
@@ -34,10 +36,12 @@ function PropertyCard({ property }: { property: PropertyCardProps }) {
             <span className="font-semibold">{formatCurrency(price)}</span> night
           </p>
           {/* country and flag */}
+          <CountryFlagAndName countryCode={country} />
         </div>
       </Link>
       <div className="absolute z-5 top-5 right-5">
         {/* favorite toggle button */}
+        <FavoriteToggleButton propertyId={propertyId} />
       </div>
     </article>
   );

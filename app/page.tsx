@@ -1,5 +1,7 @@
+import LoadingCards from "@/components/card/LoadingCards";
 import CategoriesList from "@/components/home/CategoriesList";
 import PropertiesContainer from "@/components/home/PropertiesContainer";
+import { Suspense } from "react";
 
 export default async function HomePage({
   searchParams,
@@ -10,7 +12,9 @@ export default async function HomePage({
   return (
     <section>
       <CategoriesList search={search} category={category} />
-      <PropertiesContainer search={search} category={category} />
+      <Suspense fallback={<LoadingCards />}>
+        <PropertiesContainer search={search} category={category} />
+      </Suspense>
     </section>
   );
 }
