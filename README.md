@@ -2833,7 +2833,7 @@ model Favorite {
 
   profile   Profile  @relation(fields: [profileId], references: [clerkId], onDelete: Cascade)
   profileId String
-
+  
   property   Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   propertyId String
 
