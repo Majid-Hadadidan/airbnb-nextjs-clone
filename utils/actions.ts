@@ -102,7 +102,7 @@ export const updateProfileAction = async (
     const validateFields = validateWidthZodSchema(profileSchema, rawData);
 
     await db.profile.update({
-      where: {  
+      where: {
         clerkId: user.id,
       },
       data: validateFields,
@@ -191,9 +191,31 @@ export const fetchProperties = async ({
       image: true,
       price: true,
     },
-    orderBy:{
-    createdAt:'desc'
-    }
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return properties;
 };
+
+export const fetchFavoriteId = async ({
+  propertyId,
+}: {
+  propertyId: string;
+}) => {
+  const user = await getAuthUser();
+  const favorite = await db.favorite.findFirst({
+    where: {
+      propertyId,
+      profileId: user.id,
+    },
+    select: {
+      id: true,
+    },
+  });
+  return favorite?.id || null;
+};
+
+export const toggleFavoriteAction=async()=>{
+  return {message:'toggle favorite'}
+}
