@@ -222,6 +222,48 @@ export const toggleFavoriteAction = async (prevState: {
   pathname: string;
 }) => {
   const { propertyId, favoriteId, pathname } = prevState;
-  console.log(propertyId, favoriteId, pathname);
-  return { message: "toggle favorite" };
+  const user = await getAuthUser();
+
+  try {
+    if (favoriteId) {
+      await db.favorite.delete({
+        where: {
+          id: favoriteId,
+        },
+      });
+    } else {
+      await db.favorite.create({
+        data: {
+          propertyId,
+          profileId: user.id,
+        },
+      });
+    }
+    revalidatePath(pathname);
+    return { message: favoriteId ? "Removed from Faves" : "Added to Faves" };
+  } catch (error) {
+    return renderError(error);
+  }
+};
+
+export const fetchFavorites = async () => {
+  const user = await getAuthUser();
+  const favorites = await db.favorite.findMany({
+    where: {
+      profileId: user.id,
+    },
+    select: {
+      property: {
+        select: {
+          id: true,
+          name: true,
+          tagline: true,
+          country: true,
+          image: true,
+          price: true,
+        },
+      },
+    },
+  });
+  return favorites.map((favorite) => favorite.property);
 };
