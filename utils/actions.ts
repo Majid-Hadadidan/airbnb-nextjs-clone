@@ -11,6 +11,7 @@ import db from "@/utils/db";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { uploadImage } from "./supabase";
+import { property } from "zod";
 
 //authenticate User
 export async function getAuthUser() {
@@ -266,4 +267,17 @@ export const fetchFavorites = async () => {
     },
   });
   return favorites.map((favorite) => favorite.property);
+};
+
+//THIS Action is for th propertyDetailspage properties/[id]
+
+export const fetchPropertyDetails = async (id:string) => {
+  return await db.property.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      profile: true,
+    },
+  });
 };
