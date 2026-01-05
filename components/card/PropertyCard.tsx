@@ -11,7 +11,7 @@ function PropertyCard({ property }: { property: PropertyCardProps }) {
 
   return (
     <article className="group relative">
-      <Link href={`/property/${propertyId}`}>
+      <Link href={`/properties/${propertyId}`}>
         <div className="relative h-[300px] overflow-hidden rounded-md mb-2">
           <Image
             src={image}
