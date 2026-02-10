@@ -1,3 +1,4 @@
+'use client'
 import { DateRange } from "react-day-picker";
 import { Calendar } from "../ui/calendar";
 import { useState } from "react";

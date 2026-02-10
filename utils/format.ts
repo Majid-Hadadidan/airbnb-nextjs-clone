@@ -1,5 +1,3 @@
-
-
 export const formatCurrency = (amount: number | null) => {
   const value = amount || 0;
   return new Intl.NumberFormat("en-US", {
@@ -8,4 +6,10 @@ export const formatCurrency = (amount: number | null) => {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(value);
+};
+
+export const formatQuantity = (quantity: number, noun: string): string => {
+  return quantity === 1 || quantity === 0
+    ? `${quantity} ${noun}`
+    : `${quantity} ${noun}s`;
 };

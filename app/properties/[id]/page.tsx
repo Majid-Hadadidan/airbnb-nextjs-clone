@@ -3,6 +3,7 @@ import PropertyRating from "@/components/card/PropertyRating";
 import BookingCalendar from "@/components/properties/BookingCalendar";
 import BreadCrumbs from "@/components/properties/BreadCrumbs";
 import ImageContainer from "@/components/properties/ImageContainer";
+import PropertyDetails from "@/components/properties/PropertyDetails";
 import ShareButton from "@/components/properties/ShareButton";
 import { fetchPropertyDetails } from "@/utils/actions";
 import { redirect } from "next/navigation";
@@ -19,20 +20,21 @@ async function PropertyDetailsPage({ params }: { params: { id: string } }) {
         <h2 className="text-4xl font-bold capitalize">{property.tagline}</h2>
         <div className="flex items-center gap-x-4">
           {/* share button */}
-          <ShareButton propertyId={property.id} name={property.name}/>
+          <ShareButton propertyId={property.id} name={property.name} />
           <FavoriteToggleButton propertyId={property.id} />
         </div>
       </header>
-      <ImageContainer mainImage={property.image} name={property.name}/>
+      <ImageContainer mainImage={property.image} name={property.name} />
       <section className="lg:grid lg:grid-cols-12 gap-x-12 mt-12">
         <div className="lg:col-span-8">
           <div className="flex gap-x-4 items-center">
             <h2 className="text-xl font-bold">{property.name}</h2>
             <PropertyRating inPage propertyId={property.id} />
           </div>
+          <PropertyDetails details={details} />
         </div>
         <div className="lg:col-span-4 flex flex-col items-center">
-          <BookingCalendar/>
+          <BookingCalendar />
         </div>
       </section>
     </section>

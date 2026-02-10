@@ -1,6 +1,6 @@
 import { Breadcrumb,BreadcrumbItem,BreadcrumbLink,BreadcrumbPage,BreadcrumbSeparator,BreadcrumbList } from "../ui/breadcrumb"
 
-function BreadCrumbs({name}) {
+function BreadCrumbs({name}:{name:string}) {
   return (
     <Breadcrumb>
     <BreadcrumbList>
