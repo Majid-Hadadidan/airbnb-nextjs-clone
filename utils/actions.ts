@@ -11,7 +11,7 @@ import db from "@/utils/db";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { uploadImage } from "./supabase";
-import { property } from "zod";
+
 
 //authenticate User
 export async function getAuthUser() {
